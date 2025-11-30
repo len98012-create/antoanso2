@@ -30,6 +30,22 @@ const App: React.FC = () => {
     scrollToBottom();
   }, [messages]);
 
+  // Lấy theme từ localStorage khi load trang
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') setDarkMode(true);
+  }, []);
+
+  // Khi darkMode thay đổi, cập nhật html class và lưu localStorage
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    localStorage.setItem('theme', darkMode ? 'dark' : 'light');
+  }, [darkMode]);
+
   const handleSendMessage = async (text: string = inputValue) => {
     const trimmedText = text.trim();
     if (!trimmedText || isLoading) return;
@@ -106,7 +122,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className={`${darkMode ? 'dark' : ''} flex flex-col h-full transition-colors duration-500`}>
+    <div className="flex flex-col h-full transition-colors duration-500">
       <div className="flex flex-col h-screen bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 transition-colors duration-500">
         {/* Header */}
         <header className="flex-none bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 px-4 py-3 shadow-sm z-10 flex justify-between items-center transition-colors duration-500">
