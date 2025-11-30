@@ -30,13 +30,13 @@ const App: React.FC = () => {
     scrollToBottom();
   }, [messages]);
 
-  // Lấy theme từ localStorage khi load trang
+  // Khởi tạo theme từ localStorage
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'dark') setDarkMode(true);
   }, []);
 
-  // Khi darkMode thay đổi, cập nhật html class và lưu localStorage
+  // Cập nhật class 'dark' trên <html> và lưu vào localStorage
   useEffect(() => {
     if (darkMode) {
       document.documentElement.classList.add('dark');
